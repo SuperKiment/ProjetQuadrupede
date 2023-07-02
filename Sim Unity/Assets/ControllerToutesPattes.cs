@@ -15,21 +15,21 @@ public class ControllerToutesPattes : MonoBehaviour
     public ControllerPatteSeule ArriereGauche;
 
     public bool makeAll = false;
+    public bool avancer = true;
     public float positionX;
     public float positionY;
     public float maxSpeed;
     public float torque;
     public float toleranceAngle;
+    public float speedMarche;
+    public float amplitudeX;
+    public float amplitudeY;
+    public float hauteurY;
 
     Dictionary<string, ControllerPatteSeule> dico;
 
     void Start()
     {
-        positionX = -1;
-        positionY = -5;
-        maxSpeed = 40;
-        torque = 50;
-        toleranceAngle = 10;
 
         dico = new Dictionary<string, ControllerPatteSeule>
         {
@@ -61,5 +61,30 @@ public class ControllerToutesPattes : MonoBehaviour
 
             }
         }
+
+        if (avancer)
+        {
+            float cosX = getCos(0);
+
+            float cosY = getCos(Mathf.PI * 3 / 2);
+            if (cosY < 0) cosY = 0;
+
+            dico[patteAvantDroiteName].setPosition(cosX * amplitudeX, cosY * amplitudeY - hauteurY);
+            dico[patteArriereGaucheName].setPosition(cosX * amplitudeX, cosY * amplitudeY - hauteurY);
+
+            float cosX2 = getCos(Mathf.PI);
+
+            float cosY2 = getCos(Mathf.PI / 2);
+            if (cosY2 < 0) cosY2 = 0;
+
+            dico[patteArriereDroiteName].setPosition(cosX2 * amplitudeX, cosY2 * amplitudeY - hauteurY);
+            dico[patteAvantGaucheName].setPosition(cosX2 * amplitudeX, cosY2 * amplitudeY - hauteurY);
+        }
+    }
+
+    private float getCos(float delay)
+    {
+        return Mathf.Cos(Time.time / speedMarche - delay);
+
     }
 }

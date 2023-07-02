@@ -39,7 +39,7 @@ public class ControllerPatteSeule : MonoBehaviour
     void Update()
     {
         Vector3 angles = CalculateLegAngles(upperArmLength, lowerArmLength, positionCibleX, positionCibleY);
-        Debug.Log(angles);
+        //Debug.Log(angles);
 
         setAngle(arriereCorps, angles.x, 1);
         setAngle(avantArriere, angles.y, 2);
@@ -78,9 +78,16 @@ public class ControllerPatteSeule : MonoBehaviour
 
         hinge.motor = motor3;
         hinge.useMotor = true;
+
+        var spring = hinge.spring;
+        spring.spring = 50;
+        spring.damper = 50;
+        hinge.spring = spring;
+
+        //hinge.useSpring = true;
     }
 
-    public Vector3 CalculateLegAngles(float femurLength, float tibiaLength, float ankleX, float ankleY)
+    private Vector3 CalculateLegAngles(float femurLength, float tibiaLength, float ankleX, float ankleY)
     {
         // Convert ankle coordinates to local coordinates (relative to the hip)
         Vector3 anklePosition = new Vector3(ankleX, ankleY, 0);
@@ -111,5 +118,11 @@ public class ControllerPatteSeule : MonoBehaviour
 
         // Return the angles as a Vector3
         return new Vector3(hipAngle, kneeAngle, ankleAngle);
+    }
+
+    public void setPosition(float x, float y)
+    {
+        positionCibleX = x;
+        positionCibleY = y;
     }
 }
