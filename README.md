@@ -1,2 +1,2 @@
 # ProjetQuadrupede
-En gros cet été je fais un quadrupède et je mettrai toute la documentation ici heheee
+Un projet ambitieux de création d'un robot quadrupède grandeur nature du style de Spot (Boston Dynamics)
